@@ -24,26 +24,8 @@ connect().then(console.log("Database connected"))
 
 const session= require('express-session');
 const MongoStore = require('connect-mongo');
-/*const store=MongoStore.create({
-    
-    crypto: {
-        
-    },
-    
-});
-app.use(session({
-    
-    store:MongoStore.create({
-        mongoUrl:dbUrl,
-        touchAfter:24*3600,
-})
-}));
 
-store.on('error', ()=>{
-    console.log("ERROR in MONGO SESSION STORE", err);
-});*/
-
-app.use(session({  secret: process.env.secret, resave: false, saveUninitialized: true}));
+app.use(session({  secret: '@ffj6y', resave: false, saveUninitialized: true}));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(flash());
