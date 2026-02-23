@@ -15,14 +15,35 @@ const Plant= require('./Models/Plants');
 const expressError= require('./expressError.js');
 const flash= require('connect-flash');
 const Review= require('./Models/review.js')
+const dbUrl= process.env.ATLASDB_URL;
 async function connect(){
-    await mongoose.connect('mongodb://127.0.0.1/FFJ');
+    await mongoose.connect(dbUrl);
 }
 connect().then(console.log("Database connected"))
 .catch((err)=>console.log(err));
 
 const session= require('express-session');
-app.use(session({secret: '@ffj6yc', resave: false, saveUninitialized: true}));
+const MongoStore = require('connect-mongo');
+/*const store=MongoStore.create({
+    
+    crypto: {
+        
+    },
+    
+});
+app.use(session({
+    
+    store:MongoStore.create({
+        mongoUrl:dbUrl,
+        touchAfter:24*3600,
+})
+}));
+
+store.on('error', ()=>{
+    console.log("ERROR in MONGO SESSION STORE", err);
+});*/
+
+app.use(session({  secret: process.env.secret, resave: false, saveUninitialized: true}));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(flash());
